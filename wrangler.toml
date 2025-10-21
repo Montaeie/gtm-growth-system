@@ -1,3 +1,4 @@
 name = "gtm-growth-system"
 compatibility_date = "2025-10-21"
+compatibility_flags = ["nodejs_compat"]
 pages_build_output_dir = ".vercel/output/static"
