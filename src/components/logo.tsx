@@ -10,7 +10,7 @@ interface LogoProps {
 export function Logo({ width, height, className }: LogoProps) {
   return (
     <Image
-      src="/images/gtm logo.svg"
+      src="/images/gtm-logo.svg"
       alt="GTM Growth System"
       width={width ?? 80}
       height={height ?? 40}
