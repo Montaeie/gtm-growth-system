@@ -5,7 +5,7 @@ import Image from "next/image";
 import { Logo } from "@/components/logo";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/button";
-import { Loader2, Star } from "lucide-react";
+import { Loader2, Star, Menu, X } from "lucide-react";
 import { Button } from "@/components/button";
 import { ThemeSwitcherHome } from "@/components/theme-switcher";
 import ShadowPNG from "/public/images/shadow.png";
@@ -16,6 +16,7 @@ export default function Home() {
   const [email, setEmail] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -64,7 +65,9 @@ export default function Home() {
         <Link href="/" className="flex h-10 items-center gap-1">
           <Logo />
         </Link>
-        <div className="flex items-center gap-4">
+
+        {/* Desktop Navigation */}
+        <div className="hidden md:flex items-center gap-4">
           <div className="flex items-center gap-6">
             <a
               href="#features"
@@ -101,7 +104,52 @@ export default function Home() {
             Get Started
           </Link>
         </div>
+
+        {/* Mobile Menu Button */}
+        <button
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          className="md:hidden p-2 text-primary hover:bg-primary/10 rounded-md transition-colors"
+          aria-label="Toggle menu"
+        >
+          {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+        </button>
       </div>
+
+      {/* Mobile Navigation Menu */}
+      {isMobileMenuOpen && (
+        <div className="md:hidden fixed top-[64px] left-0 right-0 z-40 bg-card/95 backdrop-blur-xl border-b border-border/30 shadow-lg">
+          <div className="flex flex-col gap-1 p-4 max-w-screen-lg mx-auto">
+            <a
+              href="#features"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="px-4 py-3 text-primary/80 hover:text-primary hover:bg-primary/10 rounded-md transition-colors"
+            >
+              Features
+            </a>
+            <a
+              href="#pricing"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="px-4 py-3 text-primary/80 hover:text-primary hover:bg-primary/10 rounded-md transition-colors"
+            >
+              Pricing
+            </a>
+            <a
+              href="#results"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="px-4 py-3 text-primary/80 hover:text-primary hover:bg-primary/10 rounded-md transition-colors"
+            >
+              Results
+            </a>
+            <Link
+              href="#contact"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className={cn(buttonVariants({ size: "sm" }), "mt-2")}
+            >
+              Get Started
+            </Link>
+          </div>
+        </div>
+      )}
 
       {/* Content */}
       <div className="z-10 mx-auto flex w-full max-w-screen-lg flex-col gap-4 px-6">
@@ -125,20 +173,18 @@ export default function Home() {
           <p className="max-w-3xl text-center text-xl !leading-relaxed text-muted-foreground md:text-2xl font-light">
             Qualified leads automatically flowing into your pipeline every week.
           </p>
-          <div className="flex items-center justify-center gap-6 mt-4">
-            <div className="flex flex-col items-center">
-              <span className="text-3xl font-bold text-primary">20hrs/wk</span>
-              <span className="text-sm text-muted-foreground">Time Saved</span>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 mt-6 w-full max-w-2xl">
+            <div className="flex flex-col items-center gap-2 p-4 sm:p-0">
+              <span className="text-3xl sm:text-4xl font-bold text-primary">20hrs/wk</span>
+              <span className="text-sm text-muted-foreground text-center">Time Saved</span>
             </div>
-            <div className="h-12 w-px bg-border"></div>
-            <div className="flex flex-col items-center">
-              <span className="text-3xl font-bold text-primary">45-150</span>
-              <span className="text-sm text-muted-foreground">Qualified Leads/Week</span>
+            <div className="flex flex-col items-center gap-2 p-4 sm:p-0 border-t sm:border-t-0 sm:border-l sm:border-r border-border pt-6 sm:pt-0">
+              <span className="text-3xl sm:text-4xl font-bold text-primary">45-150</span>
+              <span className="text-sm text-muted-foreground text-center">Qualified Leads/Week</span>
             </div>
-            <div className="h-12 w-px bg-border"></div>
-            <div className="flex flex-col items-center">
-              <span className="text-3xl font-bold text-primary">100%</span>
-              <span className="text-sm text-muted-foreground">Focus on Closing</span>
+            <div className="flex flex-col items-center gap-2 p-4 sm:p-0 border-t sm:border-t-0 border-border pt-6 sm:pt-0">
+              <span className="text-3xl sm:text-4xl font-bold text-primary">100%</span>
+              <span className="text-sm text-muted-foreground text-center">Focus on Closing</span>
             </div>
           </div>
           <div className="mt-2 flex w-full items-center justify-center gap-2">
